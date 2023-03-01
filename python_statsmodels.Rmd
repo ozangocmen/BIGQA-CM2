@@ -1,0 +1,61 @@
+---
+title: "Python ttest_ind"
+author: "Ozan"
+date: "2023-03-01"
+output: html_document
+---
+
+### Alternative Python Code
+
+Weighted one-sided t test application with statsmodels 0.14.0 `statsmodels.stats.weightstats.ttest_ind`
+
+Loading the libraries with `pip`
+
+```{python}
+!pip install git+https://github.com/statsmodels/statsmodels
+!pip install numpy
+```
+
+```{python}
+import numpy as np
+```
+
+#### defining sample data
+
+```{python}
+r = np.array([1000, 2000, 800, 500])
+nr = np.array([1500, 500, 300])
+print(r)
+print(nr)
+```
+
+#### defining a function 
+
+`wei` function is the weight of the i-th patient was given by
+
+![](images/paste-CB6D4EB5.png){width="185"}
+
+with n~*i*~ denoting total number of cells in patient *i* P \<- c(4, 3) being the total number of patients in that group (R or NR).
+
+```{python}
+def wei(vect):
+    wei_vec = []
+    for i in range(len(vect)):
+        wei_vec.append(vect[i]*(len(vect)/np.sum(vect)))
+    print(wei_vec)
+```
+
+#### defining weights 
+
+```{python}
+wei(r)
+wei(nr)
+wei_r = np.array(wei(r))
+wei_nr = np.array(wei(nr))
+```
+
+```{python}
+t_stat, p_val, df = ttest_ind(r, nr, usevar='unequal', alternative='larger', weights=(wei_r, wei_nr))
+print("t-statistic:", t_stat)
+print("p-value:", p_val)
+```
