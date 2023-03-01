@@ -84,5 +84,3 @@ Also there is correction for p values for the size of clusters with bootsrapping
 4.  repeating this for 2000-3000 iterations.
 
 Our approach for **obj2**, creating an analogy for simplifying the complexity of article's data and method.
-
-## 
